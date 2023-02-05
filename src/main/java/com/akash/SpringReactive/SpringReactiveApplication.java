@@ -47,13 +47,52 @@ public class SpringReactiveApplication implements CommandLineRunner{
 //		flatMapDemo();
 		
 //		multipleSubscribers();
-//		mergeStreams();	
+		mergeStreams();	
 //		zipStreamDemo();
 	
+//		fluxFilter();
+//		fluxZip();
 		
-	
+//		fluxMap();
 	}
 	
+	public void fluxMap() {
+		
+		Flux<String> shareOne = Flux.just("Mobikwik", "Tata Motors", "Reliance", "RateGain", "Adani Wilmar");
+		shareOne.map( shareName -> shareName.toUpperCase())
+				.log()
+				.subscribe(
+							value -> System.out.println(value)
+						);
+		
+	}
+	
+	
+	public void fluxZip() {
+		
+
+		Flux<Integer> stocksValues = Flux.just(100,200,4500,300,500,3423,23421,1242,132,23143).log();
+		Flux<String> shareOne = Flux.just("Mobikwik", "Tata Motors", "Reliance", "RateGain", "Adani Wilmar");
+		
+		Flux.zip(shareOne, stocksValues).log()
+			.subscribe(
+						value -> System.out.println(value)
+					);
+		
+		
+	}
+	
+	
+	public void fluxFilter() {
+		
+		Flux<Integer> stocksValues = Flux.just(100,200,4500,300,500,3423,23421,1242,132,23143).log();
+		
+		stocksValues.filter( price -> price >1000 )
+					.log()
+					.subscribe(
+								price -> System.out.println(price)
+							);
+	}
 	
 	public void zipStreamDemo() {
 		
